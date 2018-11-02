@@ -9,7 +9,7 @@
   oc set probe dc spring-demo-dev --liveness --get-url=http://:8080/health
 */
 
-def appName = "${params.PROJECT_NAME}"
+def appName = "springboottest"
 def imageBuildConfig = appName
 def deploymentConfig = appName
 
@@ -37,13 +37,13 @@ pipeline {
         echo "Trigger image build"
         script {
           openshift.withCluster() {
-            openshift.selector("bc", imageBuildConfig).startBuild("--from-file=target/ROOT.war", "--wait")
+            openshift.selector("bc", imageBuildConfig).startBuild("--from-file=target/ROOT.jar", "--wait")
             }
           }
         }
       post {
         success {
-          archiveArtifacts artifacts: 'target/**.war', fingerprint: true
+          archiveArtifacts artifacts: 'target/**.jar', fingerprint: true
         }
       }
     }
