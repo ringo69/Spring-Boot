@@ -1,13 +1,11 @@
 pipeline {
-  agent {
-    label 'maven'
-  }
+  agent any
   stages {
     stage('Build') {
       when {
         expression {
           openshift.withCluster() {
-            return !openshift.selector('bc', 'ROOT').exists();
+            return !openshift.selector('bc', 'spring-boot').exists();
           }
         }
       }
