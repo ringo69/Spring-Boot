@@ -58,27 +58,27 @@ pipeline {
         }
       }
     }
-    stage('Promote STAGE') {
+    stage('Promote TEST') {
       steps {
         script {
           openshift.withCluster() {
-            openshift.tag("restapp:dev", "restapp:stage")
+            openshift.tag("restapp:dev", "restapp:test")
           }
         }
       }
     }
-    stage('Create STAGE') {
+    stage('Create TEST') {
       when {
         expression {
           openshift.withCluster() {
-            return !openshift.selector('dc', 'restapp-stage').exists()
+            return !openshift.selector('dc', 'restapp-test').exists()
           }
         }
       }
       steps {
         script {
           openshift.withCluster() {
-            openshift.newApp("restapp:stage", "--name=restapp-stage").narrow('svc').expose()
+            openshift.newApp("restapp:test", "--name=restapp-test").narrow('svc').expose()
           }
         }
       }
