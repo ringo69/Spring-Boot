@@ -15,6 +15,13 @@
         <version>1.5.10.RELEASE</version>
     </parent>
 
+    <repositories>
+        <repository>
+            <id>lm</id>
+            <url>http://maven.lmv.lm.se/repo</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
